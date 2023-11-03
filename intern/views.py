@@ -5,7 +5,7 @@ from rest_framework.decorators import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .task import send_mail
-
+from django.forms.models import model_to_dict
 
 class InternAPI(APIView):
     def get(self, request):
@@ -46,15 +46,16 @@ class UpdateInternDetails(APIView):
 class GetInternFromId(APIView):
     def get(self, request, id):
         data = Intern.objects.get(emp_id=id)
-        return Response({
-            "emp_id": data.emp_id,
-            "name": data.name,
-            "age": data.age,
-            "passing_year": data.passing_year,
-            "address": data.address,
-            "phone_number": data.phone_number,
-            "finishing_date": data.finishing_date
-        })
+        return Response(model_to_dict(data))
+        # return Response({
+        #     "emp_id": data.emp_id,
+        #     "name": data.name,
+        #     "age": data.age,
+        #     "passing_year": data.passing_year,
+        #     "address": data.address,
+        #     "phone_number": data.phone_number,
+        #     "finishing_date": data.finishing_date
+        # })
 
 
 class SendMail(APIView):
