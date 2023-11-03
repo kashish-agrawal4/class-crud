@@ -16,14 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from .views import InternAPI, AddNewIntern, UpdateInternDetails, DeleteIntern, GetInternFromId
-
+from .views import InternAPI, AddNewIntern, UpdateInternDetails, DeleteIntern, GetInternFromId, SendMail
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('intern/', InternAPI.as_view()),
     path('add', AddNewIntern.as_view()),
     path('update/<str:id>', UpdateInternDetails.as_view()),
     path('delete/<str:id>', DeleteIntern.as_view()),
-    path('intern/<str:id>', GetInternFromId.as_view())
+    path('intern/<str:id>', GetInternFromId.as_view()),
+    path('send-mail/', SendMail.as_view())
     # path('intern/<str:emp_id>',views.intern_details)
 ]

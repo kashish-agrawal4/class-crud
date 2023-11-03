@@ -1,8 +1,10 @@
+from time import sleep
 from django.http import JsonResponse
 from .models import Intern
 from rest_framework.decorators import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from .task import send_mail
 
 
 class InternAPI(APIView):
@@ -45,14 +47,20 @@ class GetInternFromId(APIView):
     def get(self, request, id):
         data = Intern.objects.get(emp_id=id)
         return Response({
-            "emp_id" : data.emp_id,
-            "name" : data.name,
+            "emp_id": data.emp_id,
+            "name": data.name,
             "age": data.age,
             "passing_year": data.passing_year,
-            "address" : data.address,
-            "phone_number" : data.phone_number,
+            "address": data.address,
+            "phone_number": data.phone_number,
             "finishing_date": data.finishing_date
         })
+
+
+class SendMail(APIView):
+    def get(self, request):
+        send_mail.delay()
+        return Response({"status": 'ok'})
 
 # @api_view(['GET', 'POST'])
 # def intern_list(request):
